@@ -1,0 +1,44 @@
+/* Arithmetic Operators */
+.figureButton {
+  border: none;
+  border-radius: 10px;
+  background-color: var(--strongCream);
+  font-size: 1rem;
+}
+
+.figureButton:active {
+  transform: scale(0.95);
+}
+
+.figureButton:hover {
+  background-color: rgba(92, 92, 92, 0.3);
+  color: var(--cream);
+}
+
+.operators {
+  background-color: var(--cream);
+}
+
+#subtract {
+  grid-column: 4/5;
+}
+
+#add {
+  grid-column: 4/5;
+}
+
+#one,
+#two,
+#three {
+  grid-row: 2/3;
+}
+
+#four,
+#five,
+#six {
+  grid-row: 3/4;
+}
+
+#zero {
+  grid-column: 1/3;
+}

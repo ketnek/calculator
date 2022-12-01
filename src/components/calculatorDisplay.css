@@ -1,0 +1,22 @@
+#displayWrapper {
+  background-color: var(--lightGreen);
+  height: 70px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+
+#displayOutput {
+  font-weight: bold;
+  height: 25px;
+  margin: 5px 10px 2px 10px;
+}
+
+#display {
+  color: var(--brown);
+  height: 25px;
+  margin: 2px 10px 5px 10px;
+}
