@@ -15,8 +15,8 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output }) => {
     } else if (output[output.length - 1] === '0' && e.target.innerText === '0') {
       setInput(input);
       setOutput(output);
-    } else if (input === '+' || input === '/' || input === '-' || input === 'x') {
-      if (output === '+' || output === '/' || output === 'x') {
+    } else if (input === '+' || input === '/' || input === '-' || input === '*') {
+      if (output === '+' || output === '/' || output === '*') {
         setInput(e.target.innerText);
         setOutput(e.target.innerText);
       } else {
@@ -44,7 +44,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output }) => {
 
     setInput(e.target.innerText);
 
-    if (output[output.length - 1] !== '+' && output[output.length - 1] !== '/' && output[output.length - 1] !== 'x' && output[output.length - 1] !== '-') {
+    if (output[output.length - 1] !== '+' && output[output.length - 1] !== '/' && output[output.length - 1] !== '*' && output[output.length - 1] !== '-') {
       setOutput(prevOutput => prevOutput + e.target.innerText);
     } else {
       setOutput(prevOutput => prevOutput.slice(0, prevOutput.length - 1) + e.target.innerText)
@@ -52,10 +52,10 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output }) => {
   }
 
   const handleClickMinus = (e) => {
-    const REGEXP = /\d[-+x/]/g;
+    const REGEXP = /\d[-+*/]/g;
     setInput(e.target.innerText);
 
-    if (output[output.length - 1] !== '+' && output[output.length - 1] !== '/' && output[output.length - 1] !== 'x' && output[output.length - 1] !== '-') {
+    if (output[output.length - 1] !== '+' && output[output.length - 1] !== '/' && output[output.length - 1] !== '*' && output[output.length - 1] !== '-') {
       setOutput(prevOutput => prevOutput + e.target.innerText);
     } else if (REGEXP.test(output.slice(-2))) {
       setOutput(prevOutput => prevOutput + e.target.innerText);
@@ -64,8 +64,10 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output }) => {
     }
   }
 
-  const handleClickEqual = () => {
-    console.log(+output);
+  const handleClickEqual = (e) => {
+    let result = Function(`return ${output}`)();
+    setInput(e.target.innerText);
+    setOutput(result);
   }
 
 
@@ -84,7 +86,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output }) => {
       <FigureButton
         className='figureButton operators'
         name='multiply'
-        figure='x'
+        figure='*'
         setInput={setInput}
         input={input}
         handleClick={handleClickOperators} />
