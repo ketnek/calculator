@@ -4,6 +4,7 @@
   border-radius: 10px;
   background-color: var(--strongCream);
   font-size: 1rem;
+  color: var(--black);
 }
 
 .figureButton:active {
