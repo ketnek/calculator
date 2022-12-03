@@ -7,6 +7,7 @@ export const Calculator = () => {
 
   const [input, setInput] = useState('0');
   const [output, setOutput] = useState('');
+  const [result, setResult] = useState('');
 
 
   return (
@@ -19,7 +20,9 @@ export const Calculator = () => {
         setInput={setInput}
         setOutput={setOutput}
         input={input}
-        output={output} />
+        output={output}
+        result={result}
+        setResult={setResult} />
     </div>
   );
 }

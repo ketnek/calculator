@@ -5,7 +5,7 @@ import { FigureButton } from "./buttons/figureButton";
 import './calculatorKeypad.css';
 
 
-export const CalculatorKeypad = ({ setInput, setOutput, input, output }) => {
+export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult, result }) => {
 
   const handleClickNumbers = (e) => {
 
@@ -41,11 +41,16 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output }) => {
   }
 
   const handleClickOperators = (e) => {
-
+    const REGEXP = /[-+*/]-/g;
     setInput(e.target.innerText);
 
-    if (output[output.length - 1] !== '+' && output[output.length - 1] !== '/' && output[output.length - 1] !== '*' && output[output.length - 1] !== '-') {
+    if (output[output.length - 1] !== '+' && output[output.length - 1] !== '/' && output[output.length - 1] !== '*' && output[output.length - 1] !== '-' && output[output.length - 1] !== '=') {
       setOutput(prevOutput => prevOutput + e.target.innerText);
+    } else if (REGEXP.test(output.slice(-2))) {
+      setOutput(output.replace(REGEXP, e.target.innerText));
+    } else if (output[output.length - 1] === '=') {
+      setOutput(result + e.target.innerText);
+
     } else {
       setOutput(prevOutput => prevOutput.slice(0, prevOutput.length - 1) + e.target.innerText)
     }
@@ -66,8 +71,9 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output }) => {
 
   const handleClickEqual = (e) => {
     let result = Function(`return ${output}`)();
-    setInput(e.target.innerText);
-    setOutput(result);
+    setResult(result);
+    setInput(result);
+    setOutput(prevOutput => prevOutput + e.target.innerText);
   }
 
 
