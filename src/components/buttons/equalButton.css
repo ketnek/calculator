@@ -14,5 +14,5 @@
 
 #equals:hover {
   background-color: rgba(92, 92, 92, 0.3);
-  color: black;
+  color: var(--black);
 }

@@ -3,17 +3,14 @@ import './acButton.css';
 
 
 export const AcButton = ({ setInput, setOutput }) => {
+
+  const handleClick = () => {
+    setInput('0');
+    setOutput('')
+  }
+
   return (
-    <button
-      id="clear"
-      type="button"
-      onClick={
-        () => {
-          setInput('0');
-          setOutput('');
-        }
-      }
-    >
+    <button id="clear" type="button" onClick={handleClick}>
       AC
     </button>
   );

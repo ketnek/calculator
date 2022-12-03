@@ -3,6 +3,7 @@ import './calculator.css';
 import { CalculatorDisplay } from "./calculatorDisplay";
 import { CalculatorKeypad } from "./calculatorKeypad";
 
+
 export const Calculator = () => {
 
   const [input, setInput] = useState('0');
@@ -12,10 +13,12 @@ export const Calculator = () => {
 
   return (
     <div id='calculator'>
+
       <CalculatorDisplay
         input={input}
         setInput={setInput}
         output={output} />
+
       <CalculatorKeypad
         setInput={setInput}
         setOutput={setOutput}
@@ -23,6 +26,7 @@ export const Calculator = () => {
         output={output}
         result={result}
         setResult={setResult} />
+
     </div>
   );
 }

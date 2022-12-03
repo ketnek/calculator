@@ -5,49 +5,78 @@ import { FigureButton } from "./buttons/figureButton";
 import './calculatorKeypad.css';
 
 
-export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult, result }) => {
+export const CalculatorKeypad = (
+  {
+    setInput,
+    setOutput,
+    input,
+    output,
+    setResult,
+    result
+  }
+) => {
 
   const handleClickNumbers = (e) => {
 
     if (input === '0' && output === '') {
       setInput(e.target.innerText);
       setOutput(e.target.innerText);
-    } else if (output[output.length - 1] === '0' && e.target.innerText === '0') {
+
+    } else if (input === '0' && e.target.innerText === '0') {
       setInput(input);
       setOutput(output);
+
+    } else if (output.slice(-2) === '--') {
+      setOutput(prevOutput => prevOutput.replace(/-$/, `(-${e.target.innerText})`));
+
     } else if (input === '+' || input === '/' || input === '-' || input === '*') {
+
       if (output === '+' || output === '/' || output === '*') {
         setInput(e.target.innerText);
         setOutput(e.target.innerText);
+
       } else {
         setInput(e.target.innerText);
         setOutput(prevOutput => prevOutput + e.target.innerText);
       }
+
     } else {
       setInput(prevInput => prevInput + e.target.innerText);
       setOutput(prevOutput => prevOutput + e.target.innerText);
     }
   }
 
+
   const handleClickPoint = (e) => {
+
     if (!input.includes('.') && output === '') {
       setInput(prevInput => prevInput + '.');
       setOutput(prevOutput => prevOutput + input + '.');
+
     } else if (!input.includes('.')) {
       setInput(prevInput => prevInput + '.');
       setOutput(prevOutput => prevOutput + '.');
     }
-
   }
+
 
   const handleClickOperators = (e) => {
     const REGEXP = /[-+*/]-/g;
+
     setInput(e.target.innerText);
 
-    if (output[output.length - 1] !== '+' && output[output.length - 1] !== '/' && output[output.length - 1] !== '*' && output[output.length - 1] !== '-' && output[output.length - 1] !== '=') {
+    if (
+      output[output.length - 1] !== '+'
+      && output[output.length - 1] !== '/'
+      && output[output.length - 1] !== '*'
+      && output[output.length - 1] !== '-'
+      && output[output.length - 1] !== '='
+    ) {
       setOutput(prevOutput => prevOutput + e.target.innerText);
+
     } else if (REGEXP.test(output.slice(-2))) {
       setOutput(output.replace(REGEXP, e.target.innerText));
+
     } else if (output[output.length - 1] === '=') {
       setOutput(result + e.target.innerText);
 
@@ -56,32 +85,49 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
     }
   }
 
+
   const handleClickMinus = (e) => {
     const REGEXP = /\d[-+*/]/g;
+
     setInput(e.target.innerText);
 
-    if (output[output.length - 1] !== '+' && output[output.length - 1] !== '/' && output[output.length - 1] !== '*' && output[output.length - 1] !== '-') {
+    if (
+      output[output.length - 1] !== '+'
+      && output[output.length - 1] !== '/'
+      && output[output.length - 1] !== '*'
+      && output[output.length - 1] !== '-'
+      && output[output.length - 1] !== '='
+    ) {
       setOutput(prevOutput => prevOutput + e.target.innerText);
+
     } else if (REGEXP.test(output.slice(-2))) {
       setOutput(prevOutput => prevOutput + e.target.innerText);
+
+    } else if (output[output.length - 1] === '=') {
+      setOutput(result + e.target.innerText);
+
     } else {
       setOutput(prevOutput => prevOutput.slice(0, prevOutput.length - 1) + e.target.innerText)
     }
   }
 
+
   const handleClickEqual = (e) => {
     let result = Function(`return ${output}`)();
-    setResult(result);
+
     setInput(result);
+    setResult(result);
     setOutput(prevOutput => prevOutput + e.target.innerText);
   }
 
 
   return (
     <div id="keyPad">
+
       <AcButton
         setInput={setInput}
         setOutput={setOutput} />
+
       <FigureButton
         className='figureButton operators'
         name='divide'
@@ -89,6 +135,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickOperators} />
+
       <FigureButton
         className='figureButton operators'
         name='multiply'
@@ -96,6 +143,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickOperators} />
+
       <FigureButton
         className='figureButton operators'
         name='subtract'
@@ -103,6 +151,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickMinus} />
+
       <FigureButton
         className='figureButton operators'
         name='add'
@@ -110,6 +159,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickOperators} />
+
       <FigureButton
         className='figureButton'
         name='one'
@@ -117,6 +167,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickNumbers} />
+
       <FigureButton
         className='figureButton'
         name='two'
@@ -124,6 +175,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickNumbers} />
+
       <FigureButton
         className='figureButton'
         name='three'
@@ -131,6 +183,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickNumbers} />
+
       <FigureButton
         className='figureButton'
         name='four'
@@ -138,6 +191,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickNumbers} />
+
       <FigureButton
         className='figureButton'
         name='five'
@@ -145,6 +199,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickNumbers} />
+
       <FigureButton
         className='figureButton'
         name='six'
@@ -152,6 +207,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickNumbers} />
+
       <FigureButton
         className='figureButton'
         name='seven'
@@ -159,6 +215,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickNumbers} />
+
       <FigureButton
         className='figureButton'
         name='eight'
@@ -166,6 +223,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickNumbers} />
+
       <FigureButton
         className='figureButton'
         name='nine'
@@ -173,6 +231,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickNumbers} />
+
       <FigureButton
         className='figureButton'
         name='zero'
@@ -180,6 +239,7 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickNumbers} />
+
       <FigureButton
         className='figureButton'
         name='decimal'
@@ -187,9 +247,11 @@ export const CalculatorKeypad = ({ setInput, setOutput, input, output, setResult
         setInput={setInput}
         input={input}
         handleClick={handleClickPoint} />
+
       <EqualButton
         setInput={setInput}
         handleClick={handleClickEqual} />
+
     </div>
   );
 }
